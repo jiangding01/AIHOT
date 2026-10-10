@@ -11,12 +11,12 @@
  * feedLabel 是分类 RSS 标题里的名字（不写就用 label）。公开接口、RSS 和 MCP 里要把一类并进另一类发布，写在站点设置里（site/site.ts 的 PUBLIC_CATEGORIES）。
  */
 export const CATEGORIES = [
-  { key: "ai-models", label: "模型", feedLabel: "AI 模型", section: "模型发布/更新", guide: "模型本身的发布、版本、权重开放、能力或价格变化，以及既有榜单上的模型成绩。公布一次跑分不是发布新基准，也不是教程。" },
-  { key: "ai-products", label: "产品", feedLabel: "AI 产品", section: "产品发布/更新", guide: "可使用的 AI 产品、功能、应用、工具、API、平台和工程组件的发布更新。模型厂商发布的推理框架、算子库、硬件适配组件仍是产品，不能因为厂商名归成模型。" },
-  { key: "industry", label: "行业", feedLabel: "行业动态", section: "行业动态", guide: "已发生的公司经营、融资并购、人事、合作、诉讼、政策、真实安全事故及调查进展。新闻由当事人发帖、带有态度，也不因此变成观点。" },
-  { key: "paper", label: "论文", feedLabel: "论文", section: "论文研究", guide: "以新研究方法、实验设计与发现为核心的论文、技术报告、新基准或研究数据集。系统性红队实验属于研究；既有榜单成绩归模型，真实事故的新闻调查归行业。" },
-  { key: "tip", label: "教程", section: "技巧与观点", guide: "读者可以照着使用的方法、提示词、工具用法、工程实践复盘与技术讲解。重点是可复用的做法；单纯发布工具归产品，只有态度和预测而无做法归观点。", commentary: true },
-  { key: "opinion", label: "观点", section: "技巧与观点", guide: "重点是作者的解释、判断、主张、预测、评论或访谈观点。讨论市场不自动归行业，作者是名人不自动归观点。", commentary: true },
+  { key: "ai-models", label: "模型", feedLabel: "编程模型", section: "模型发布/更新", guide: "开发者用来写代码的模型本身：新模型或新版本、权重开放、上下文与能力变化、API 价格与限额变化，以及既有榜单（如 SWE-bench、Terminal-Bench）上的模型成绩。公布一次跑分不是发布新基准，也不是教程。" },
+  { key: "ai-products", label: "工具", feedLabel: "AI 编程工具", section: "工具发布/更新", guide: "可使用的 AI 编程工具与开发者基础设施的发布更新：IDE、编辑器插件、命令行编码 Agent、云端 Agent、代码审查与测试工具、MCP 服务器、SDK、Agent 框架。模型厂商发布的 CLI、SDK、编辑器集成仍是工具，不能因为厂商名归成模型。" },
+  { key: "industry", label: "行业", feedLabel: "行业动态", section: "行业动态", guide: "已发生的公司经营、融资并购、人事、合作、订阅套餐与定价策略、诉讼、政策，以及真实的安全事故（如 Agent 删库、供应链投毒）及调查进展。新闻由当事人发帖、带有态度，也不因此变成观点。" },
+  { key: "paper", label: "研究", feedLabel: "研究与评测", section: "研究与评测", guide: "以新研究方法、实验设计与发现为核心的论文、技术报告、新基准或评测数据集，包括对 AI 编程效率、代码质量、安全性的系统研究。既有榜单上的模型成绩归模型，真实事故的新闻调查归行业。" },
+  { key: "tip", label: "实践", feedLabel: "实践与技巧", section: "实践与观点", guide: "开发者可以照着做的方法：工作流、提示词、Skill、上下文与规则文件写法、工具配置、工程实践复盘和技术讲解。重点是可复用的做法；单纯发布工具归工具，只有态度和预测而无做法归观点。", commentary: true },
+  { key: "opinion", label: "观点", section: "实践与观点", guide: "重点是作者的解释、判断、主张、预测、评论或访谈观点，例如 AI 编程对开发者职业、团队协作、代码质量的影响。讨论市场不自动归行业，作者是名人不自动归观点。", commentary: true },
 ] as const satisfies ReadonlyArray<{ key: string; label: string; feedLabel?: string; section: string; guide: string; commentary?: true }>;
 
 /**
@@ -27,7 +27,7 @@ export const CATEGORIES = [
 export const RELEASE: { category: string; tag: string; unit: string } | null = { category: "ai-models", tag: "模型发布", unit: "个新模型" };
 
 /** 周报月报的总述可以直接写、不必在报道里找到出处的行业通用词（小写）。站名会自动算进去。 */
-export const PLAIN_TERMS: readonly string[] = ["ai", "api", "llm", "gpu", "agi", "ceo", "ipo"];
+export const PLAIN_TERMS: readonly string[] = ["ai", "api", "llm", "gpu", "agi", "ceo", "ipo", "ide", "cli", "sdk", "mcp", "agent", "pr", "vibe coding"];
 
 /**
  * 内容理解一步给每篇资料判的“内容类型”（写在 prompts/content-understanding.md 里，改了类型要同步改那份提示词）。
@@ -45,22 +45,25 @@ export const CATEGORY_TAGS = [
 
 /** 可选的主题标签。 */
 export const TOPIC_TAGS = [
-  "Agent", "编码", "推理", "多模态", "语音", "视频", "图像生成", "RAG", "端侧", "数据/训练", "搜索", "部署/工程", "开源生态", "具身智能", "MCP/工具调用",
+  "Agent", "编码Agent", "IDE/编辑器", "CLI/终端", "代码审查", "测试", "MCP/工具调用", "上下文工程", "Skills/插件", "规格驱动", "Vibe Coding",
+  "多Agent", "推理", "本地模型", "开源生态", "前端/UI生成", "部署/工程", "安全",
 ] as const;
 
 /** 可选的实体标签（公司、机构、平台）。 */
-export const ENTITY_TAGS = ["OpenAI", "Anthropic", "DeepSeek", "DeepMind", "Google", "Meta", "Microsoft", "xAI", "Hugging Face", "GitHub", "arXiv"] as const;
+export const ENTITY_TAGS = [
+  "OpenAI", "Anthropic", "Google", "GitHub", "Cursor", "DeepSeek", "Microsoft", "JetBrains", "Devin", "Amp", "Zed", "Vercel", "Replit", "Cline", "Qwen",
+] as const;
 
 /** 模型常写的近义词，统一成词表里的写法。 */
 export const TAG_SYNONYMS: Readonly<Record<string, string>> = {
-  "教程/玩法": "教程/实践", "技巧/最佳实践": "教程/实践", "合作/生态": "行业动态", "融资/收购": "行业动态", "公司动态": "行业动态",
+  "教程/玩法": "教程/实践", "工作流": "教程/实践", 提示词: "教程/实践", 技能: "教程/实践", "技巧/最佳实践": "教程/实践", "合作/生态": "行业动态", "融资/收购": "行业动态", "公司动态": "行业动态",
   合作: "行业动态", 生态: "行业动态", 融资: "行业动态", 收购: "行业动态", 投资: "行业动态", 并购: "行业动态",
   政策: "政策/监管", 监管: "政策/监管", 法规: "政策/监管", 安全: "安全/对齐", 对齐: "安全/对齐",
   论文: "论文/研究", 研究: "论文/研究", paper: "论文/研究", papers: "论文/研究",
   "open-source": "开源/仓库", 开源: "开源/仓库", 仓库: "开源/仓库", repo: "开源/仓库",
   教程: "教程/实践", 玩法: "教程/实践", 指南: "教程/实践", 技巧: "教程/实践", 最佳实践: "教程/实践", 实践: "教程/实践",
   产品: "产品更新", 更新: "产品更新", 发布: "模型发布", 模型: "模型发布", 趋势: "现象/趋势", 现象: "现象/趋势", 观点: "大佬观点",
-  视频生成: "视频", 非ai: "非AI/通用工具", "non-ai": "非AI/通用工具", 通用工具: "非AI/通用工具", 工程工具: "非AI/通用工具",
+  代码生成: "编码Agent", 编程: "编码Agent", 编码: "编码Agent", "coding agent": "编码Agent", 智能体: "Agent", agents: "Agent", 终端: "CLI/终端", 命令行: "CLI/终端", cli: "CLI/终端", ide: "IDE/编辑器", 编辑器: "IDE/编辑器", mcp: "MCP/工具调用", 工具调用: "MCP/工具调用", skills: "Skills/插件", 插件: "Skills/插件", "vibe coding": "Vibe Coding", 氛围编程: "Vibe Coding", "code review": "代码审查", 测试生成: "测试", 非ai: "非AI/通用工具", "non-ai": "非AI/通用工具", 通用工具: "非AI/通用工具", 工程工具: "非AI/通用工具",
   安全扫描: "非AI/通用工具", devops: "非AI/通用工具", 行业: "行业动态", 动态: "行业动态",
 };
 
@@ -90,6 +93,19 @@ export const ENTITIES: Record<string, { name: string; displayTag: string | null;
   "hugging-face": { name: "Hugging Face", displayTag: "Hugging Face", aliases: ["Hugging Face"], otherNames: ["HuggingFace"] },
   cursor: { name: "Cursor", displayTag: null, aliases: ["Cursor", "Anysphere"] },
   openrouter: { name: "OpenRouter", displayTag: null, aliases: ["OpenRouter"] },
+  github: { name: "GitHub", displayTag: "GitHub", aliases: ["GitHub", "GitHub Copilot", "Copilot CLI"], otherNames: ["GitHub Blog", "GitHub Changelog"] },
+  jetbrains: { name: "JetBrains", displayTag: "JetBrains", aliases: ["JetBrains", "Junie", "IntelliJ"], otherNames: ["JetBrains AI"] },
+  cognition: { name: "Cognition（Devin / Windsurf）", displayTag: "Devin", aliases: ["Cognition", "Devin", "Windsurf"], otherNames: ["Devin Desktop", "Cognition AI"] },
+  sourcegraph: { name: "Sourcegraph / Amp", displayTag: "Amp", aliases: ["Amp", "Sourcegraph"], otherNames: ["Amp Code"] },
+  zed: { name: "Zed", displayTag: "Zed", aliases: ["Zed"], otherNames: ["Zed Industries"] },
+  vercel: { name: "Vercel", displayTag: "Vercel", aliases: ["Vercel", "v0", "AI SDK"] },
+  replit: { name: "Replit", displayTag: "Replit", aliases: ["Replit"] },
+  cline: { name: "Cline", displayTag: "Cline", aliases: ["Cline"] },
+  opencode: { name: "opencode", displayTag: null, aliases: ["opencode", "SST"] },
+  openhands: { name: "OpenHands", displayTag: null, aliases: ["OpenHands", "All Hands AI"] },
+  mistral: { name: "Mistral", displayTag: null, aliases: ["Mistral", "Devstral", "Codestral"], otherNames: ["Mistral AI"] },
+  ollama: { name: "Ollama", displayTag: null, aliases: ["Ollama"] },
+  bytedance: { name: "字节 TRAE", displayTag: null, aliases: ["TRAE", "Trae", "字节跳动"], otherNames: ["ByteDance"] },
 };
 
 /**
@@ -110,6 +126,15 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "cursor", name: "Cursor", patterns: [/\bCursor\b/] },
   { id: "kimi", name: "Kimi / 月之暗面", patterns: [/\bkimi\b|月之暗面|\bmoonshot\s?ai\b/i] },
   { id: "openrouter", name: "OpenRouter", patterns: [/openrouter/i] },
+  { id: "github", name: "GitHub", patterns: [/\bgithub\b/i] },
+  { id: "jetbrains", name: "JetBrains", patterns: [/jetbrains|\bjunie\b|intellij/i] },
+  { id: "sourcegraph", name: "Sourcegraph / Amp", patterns: [/sourcegraph|\bamp\s?code\b/i] },
+  { id: "zed", name: "Zed", patterns: [/\bZed\b/] },
+  { id: "vercel", name: "Vercel", patterns: [/vercel|\bv0\b/i] },
+  { id: "replit", name: "Replit", patterns: [/replit/i] },
+  { id: "cline", name: "Cline", patterns: [/\bcline\b/i] },
+  { id: "openhands", name: "OpenHands", patterns: [/openhands|all\s?hands\s?ai/i] },
+  { id: "bytedance", name: "字节 TRAE", patterns: [/\btrae\b/i] },
   { id: "minimax", name: "MiniMax", patterns: [/minimax/i] },
   { id: "zhipu", name: "智谱 GLM", patterns: [/智谱|\bglm-?[4-9]/i] },
   { id: "hunyuan", name: "腾讯混元", patterns: [/混元|hunyuan/i] },
@@ -123,8 +148,7 @@ export const IDENTITY_LEXICON: ReadonlyArray<{ id: string; name: string; pattern
   { id: "elevenlabs", name: "ElevenLabs", patterns: [/eleven\s?labs/i] },
   { id: "vllm", name: "vLLM", patterns: [/\bvllm\b/i] },
   { id: "ollama", name: "Ollama", patterns: [/\bollama\b/i] },
-  { id: "windsurf", name: "Windsurf", patterns: [/windsurf/i] },
-  { id: "devin", name: "Devin", patterns: [/\bdevin\b/i] },
+  { id: "cognition", name: "Cognition（Devin / Windsurf）", patterns: [/windsurf|\bdevin\b|\bcognition\s?(?:ai|labs)?\b/i] },
   { id: "manus", name: "Manus", patterns: [/\bmanus\b/i] },
   { id: "apple", name: "Apple AI", patterns: [/\bapple\s?(intelligence|silicon|ai)\b|苹果(智能|\s?AI)/i] },
   { id: "amazon", name: "Amazon / AWS", patterns: [/amazon|\baws\b|亚马逊/i] },
@@ -144,6 +168,16 @@ export const PUBLISHER_DOMAINS: ReadonlyArray<{ entityId: string; domains: reado
   { entityId: "qwen", domains: ["qwen.ai"] },
   { entityId: "cursor", domains: ["cursor.com"] },
   { entityId: "openrouter", domains: ["openrouter.ai"] },
+  { entityId: "github", domains: ["github.blog"] },
+  { entityId: "jetbrains", domains: ["blog.jetbrains.com", "junie.jetbrains.com"] },
+  { entityId: "cognition", domains: ["cognition.com", "devin.ai", "windsurf.com"] },
+  { entityId: "sourcegraph", domains: ["ampcode.com", "sourcegraph.com"] },
+  { entityId: "zed", domains: ["zed.dev"] },
+  { entityId: "vercel", domains: ["vercel.com"] },
+  { entityId: "replit", domains: ["replit.com"] },
+  { entityId: "cline", domains: ["cline.bot"] },
+  { entityId: "mistral", domains: ["mistral.ai"] },
+  { entityId: "ollama", domains: ["ollama.com"] },
 ];
 
 /** 原文里的这些写法也算提到了对应公司。 */
