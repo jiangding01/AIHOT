@@ -36,10 +36,10 @@
 
 其后可选 0–5 个适用标签，并且只能来自以下两个白名单：
 
-- 主题：Agent、编码、推理、多模态、语音、视频、图像生成、RAG、端侧、数据/训练、搜索、部署/工程、开源生态、具身智能、MCP/工具调用
-- 实体：OpenAI、Anthropic、DeepSeek、DeepMind、Google、Meta、Microsoft、xAI、Hugging Face、GitHub、arXiv
+- 主题：Agent、编码Agent、IDE/编辑器、CLI/终端、代码审查、测试、MCP/工具调用、上下文工程、Skills/插件、规格驱动、Vibe Coding、多Agent、推理、本地模型、开源生态、前端/UI生成、部署/工程、安全
+- 实体：OpenAI、Anthropic、Google、GitHub、Cursor、DeepSeek、Microsoft、JetBrains、Devin、Amp、Zed、Vercel、Replit、Cline、Qwen
 
-正文中即使明确出现了 NVIDIA、Apple、阿里等其他实体，也不要把它们放进 `tags`。不要创造白名单之外的标签。没有适用的主题或实体时，只返回第一个分类标签；例如学校限制 AI 使用的监管新闻，不需要强行归到“编码”或“推理”。
+正文中即使明确出现了 NVIDIA、Apple、Meta 等其他实体，也不要把它们放进 `tags`。不要创造白名单之外的标签。没有适用的主题或实体时，只返回第一个分类标签；例如公司融资新闻，不需要强行归到“编码Agent”或“推理”。
 
 ## 候选阅读价值
 

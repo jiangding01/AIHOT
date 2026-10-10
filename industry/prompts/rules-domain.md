@@ -1,5 +1,5 @@
 
-【AI 领域翻译规则 — 本平台 100% 是 AI/ML/LLM 行业内容，严格遵守】
+【AI 编程领域翻译规则 — 本平台 100% 是 AI 编程与 AI/ML/LLM 开发者内容，严格遵守】
 
 1. 歧义默认值：以下词在中文有非 AI 歧义，**一律按 AI 含义翻译**：
    - LLM = 大语言模型（绝不译"法学硕士"/"Master of Laws"）
@@ -43,3 +43,9 @@
    - URL 原样
    - 数字+单位：8k context / 175B params / 3.5x speedup / $3 per M tokens / 99.9%
    - 金额、参数量、比例、区间必须保留原文的阿拉伯数字和单位；不要把 $10B-$100B 改写成“数百亿至数千亿美元”等中文数量词
+
+5. 软件开发术语（本站读者是开发者）：
+   - 以下保留英文，不翻译：PR / pull request、diff、commit、repo、branch、worktree、CI/CD、lint、hook、CLI、IDE、LSP、SDK、REPL、sandbox、monorepo、vibe coding（首次可写“Vibe Coding（氛围编程）”）
+   - 以下用中文：code review = 代码审查、refactor = 重构、test = 测试、debug = 调试、deploy = 部署、merge = 合并、coding agent = 编码 Agent、harness = Agent 运行框架（也可保留 Harness）、spec-driven development = 规格驱动开发、context engineering = 上下文工程
+   - 规则文件与配置文件名原样保留：AGENTS.md、CLAUDE.md、.cursorrules、settings.json、MCP server 名称
+   - 斜杠命令、快捷键、CLI 参数原样保留：/compact、/review、--yolo、Shift+Tab
