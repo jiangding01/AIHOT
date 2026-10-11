@@ -25,7 +25,7 @@ export const SITE = {
    */
   subject: "AI 编程",
   /** 首页的完整标题（浏览器标签、搜索结果）。 */
-  homeTitle: "VibeDaily · 码上知道 — AI 编程每日精选与日报",
+  homeTitle: "VibeDaily · 码上知道 — AI 编程资讯与每日精选",
   /** 主题目录页（/topics）的标题。 */
   topicsTitle: "AI 编程主题：工具与公司、技术方向、内容形态的最新动态",
   /** 反馈表单输入框里的示例。 */
