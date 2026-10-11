@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, redirect, useLoaderData, useNavigation, useSearchParams } from "react-router";
 import type { Route } from "./+types/all";
 import type { PoolResponse } from "@aihot/contracts/site";
-import { SITE, subjectAfter } from "@aihot/site";
+import { allUpdatesLabel, SITE, subjectAfter } from "@aihot/site";
 import { beijingTime } from "@aihot/contracts/time";
 import { cachedPage, loadOr404 } from "../lib/api.server";
 import { pageReuse } from "../lib/page-reuse";
@@ -21,7 +21,7 @@ export const handle: Screen = { tab: "featured", name: "全部" };
 export { pageHeaders as headers } from "../lib/api.server";
 export const { clientLoader, shouldRevalidate } = pageReuse<typeof loader>();
 
-const ALL_TITLE = subjectAfter("全部", "动态");
+const ALL_TITLE = allUpdatesLabel();
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);

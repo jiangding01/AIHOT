@@ -121,6 +121,11 @@ export const NAV = {
    * 写 "/hot" 时首页也不放当前热点。
    */
   hidden: [] as Array<"/hot" | "/topics">,
+  /**
+   * “全部动态”的名称：导航、这一页的标题、分享图和“全部动态”RSS 的标题都用它（读 allUpdatesLabel()）。
+   * null 时按行业词拼成“全部 AI 动态”这样的说法；行业词较长、侧栏放不下时在这里写一个短的。
+   */
+  allLabel: "全部 AI 动态" as string | null,
 };
 
 /** 条目卡片和详情页上的几处说法和显示。 */
@@ -246,7 +251,7 @@ export const COMMUNITY_FEEDS: { dev: string[]; hn: string[] } = {
 /** 各页分享图（/og/pages/*.png）上的文字。主题目录页的那张按主题数自动生成。 */
 export const CARDS: Record<string, { kicker: string; title: string; subtitle: string; accent?: "hot" | "amber" }> = {
   site: { kicker: subjectAfter("每日", "精选"), title: SITE.tagline, subtitle: SITE.description },
-  all: { kicker: subjectAfter("全部", "动态"), title: "所有信源的最新动态，一站看完", subtitle: "按时间汇总各信源的最新动态，可按类别与标签筛选。" },
+  all: { kicker: allUpdatesLabel(), title: "所有信源的最新动态，一站看完", subtitle: "按时间汇总各信源的最新动态，可按类别与标签筛选。" },
   hot: { kicker: "热点榜", title: "过去 48 小时，大家在讨论什么", subtitle: "热度指数、趋势与组成热度的公开来源。", accent: "hot" },
   daily: { kicker: withSubject("日报"), title: subjectAfter(`每天 ${spokenTime(EDITION_TIMES.daily)}，一份读得完的`, "日报"), subtitle: `${subjectAfter("前一天值得关注的", "动态")}。` },
   weekly: { kicker: withSubject("周报"), title: `一周${REPORTS.entry.noun}，一次看清`, subtitle: "本周的主线、重要发布与值得回看的讨论。" },
@@ -315,6 +320,11 @@ export const PUBLIC_CATEGORIES = {
 /** “AI 日报”这类说法：行业词和名词之间，英文词加空格，中文词不加。 */
 export function withSubject(noun: string): string {
   return /[A-Za-z0-9]$/.test(SITE.subject) ? `${SITE.subject} ${noun}` : `${SITE.subject}${noun}`;
+}
+
+/** “全部动态”的名称（NAV.allLabel，未设时按行业词拼成）。 */
+export function allUpdatesLabel(): string {
+  return NAV.allLabel ?? subjectAfter("全部", "动态");
 }
 
 /** “按主题看 AI”“往期 AI 日报”这类说法：行业词接在中文后面，英文词前加空格，中文词不加；noun 照 withSubject 接上。 */
