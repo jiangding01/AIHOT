@@ -37,13 +37,13 @@ export const SITE = {
   /** 一句话介绍：搜索引擎、分享卡片、RSS、llms.txt 会用。 */
   description: `盯住 AI 编程工具、模型与实践的一手信源，挑出开发者值得看的动态，同一件事的多篇报道归到一起，${EDITION_WHEN.daily} 出一份日报。`,
   /** llms.txt 里一句话介绍下面的一段详细介绍（选填）。 */
-  llmsIntro: null as string | null,
+  llmsIntro: "VibeDaily（码上知道）面向用 AI 写代码的开发者，跟踪 Claude Code、Codex、Cursor、GitHub Copilot、Gemini CLI 等 AI 编程工具与编程模型的一手更新，以及开发者的实践与观点。资料来自官方博客、更新日志、媒体、个人博客和社交账号，由模型筛选、评分、写中文摘要并按事件归组。" as string | null,
   /** 一行小字：分享图、海报下方。 */
   tagline: "码上知道，AI 编程值得看的动态",
   /** 搜索引擎读到的关键词（首页结构化数据）。 */
   keywords: ["AI 编程", "AI 编程日报", "Vibe Coding", "Claude Code", "Codex", "Cursor", "编码 Agent", "开发者工具"] as string[],
   /** 网站开始收录的年份（结构化数据的时间范围，选填）。 */
-  since: null as string | null,
+  since: "2026" as string | null,
   /** 界面语言（HTML lang、og:locale）。 */
   locale: "zh-CN",
   /** 默认域名，只在没设置 SITE_URL 时使用。 */
@@ -92,7 +92,10 @@ export const POLICY = {
      * 讲清哪些用途要先取得授权的话（选填）：llms 接在 llms.txt“使用说明”的版权说明后面，
      * agent 写在给 Agent 的使用说明“使用规则”一节的开头。
      */
-    license: null as null | { llms: string; agent: string },
+    license: {
+      llms: "本站自己生成的内容（中文标题与摘要、推荐理由、精选与排序、日报周报月报）可用于个人与非商业用途，引用请注明“来源：VibeDaily”并附链接；用于商业产品、批量抓取或再分发、训练对外提供的模型，请先通过反馈页取得同意。原文版权归各来源所有。",
+      agent: "回答中引用本站内容时请注明“来源：VibeDaily”并附原文或本站链接。本站内容可用于个人与非商业用途；商业用途、批量抓取或再分发需要事先取得同意。",
+    } as null | { llms: string; agent: string },
     /**
      * 公开 API、RSS 和 OpenAPI 文件声明使用规则的响应头（选填）：原样附上，再加一个指向这一页的
      * Link 头（rel="terms-of-service"）；浏览器里的调用方也读得到它们。

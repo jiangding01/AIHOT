@@ -1,0 +1,42 @@
+# 推送到 main 且 Check 全部通过后，把 Check 验证过的那个提交部署到 VibeDaily 的服务器；也可以在 Actions 页手动
+# 触发，部署 main 的最新提交。部署密钥在服务器的 authorized_keys 里被 command= 限定为只能运行
+# ~/.local/bin/vibedaily-deploy（deploy/vibedaily-deploy.sh 的安装副本），提交号是它唯一的输入。
+# 需要的 Secrets：DEPLOY_SSH_KEY（私钥）、DEPLOY_KNOWN_HOSTS（服务器公钥那一行）、DEPLOY_HOST、DEPLOY_USER。
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [Check]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # 只部署本仓库 main 上的推送；拉取请求（包括别人 fork 来的）即使分支叫 main 也不会触发。
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Deploy over SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          TARGET_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=30 -o ServerAliveCountMax=10 \
+            "$DEPLOY_USER@$DEPLOY_HOST" "$TARGET_SHA"
